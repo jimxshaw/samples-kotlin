@@ -8,36 +8,36 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
-        tools:context="me.jimmyshaw.activityanimation.MainActivity"
+        tools:context="me.jimmyshaw.activityanimation.SecondActivity"
         android:orientation="vertical" >
 
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="MainActivity"
+            android:text="SecondActivity"
             android:id="@+id/textView"
-            android:textColor="#0000ff"/>
+            android:textColor="#ff0000"/>
 
     <Button
-            android:id="@+id/btnSlideInNextActivity"
+            android:id="@+id/btnFinishWithSlideOut"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:text="Slide In Next Activity" />
+            android:layout_marginTop="15sp"
+            android:text="Finish with Slide Out" />
 
     <Button
-            android:id="@+id/btnPullInNextActivity"
+            android:id="@+id/btnFinishWithPullOut"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:text="Pull In Next Activity" />
+            android:layout_marginTop="15sp"
+            android:text="Finish with Pull Out" />
 
     <Button
-            android:id="@+id/btnFadeToNextActivity"
+            android:id="@+id/btnFinishWithFade"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:text="Fade To Next Activity" />
+            android:layout_marginTop="15sp"
+            android:text="Finish with Fade" />
 
 </LinearLayout>
