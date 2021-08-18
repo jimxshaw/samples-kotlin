@@ -8,7 +8,7 @@ android {
     compileSdk 30
 
     defaultConfig {
-        applicationId "me.jimmyshaw.activityanimation"
+        applicationId "me.jimmyshaw.activitynavigation"
         minSdk 26
         targetSdk 30
         versionCode 1
