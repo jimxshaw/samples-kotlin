@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts.*
 import kotlinx.android.synthetic.main.activity_main.*
 import android.util.Log.d as d1
@@ -19,7 +20,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Listen to the button event.
+        // Start a new Activity and get the results.
+        val getContent = registerForActivityResult(StartActivityForResult()) {
+            result -> onActivityResult(NEXT_ACTIVITY, result)
+        }
+
         btnNextScreen.setOnClickListener {
             // Start a new Intent.
             val nextScreen = Intent(applicationContext, SecondActivity::class.java)
@@ -28,13 +33,7 @@ class MainActivity : AppCompatActivity() {
             nextScreen.putExtra("email", editTextEmail.text.toString())
             nextScreen.putExtra("password", editTextPassword.text.toString())
 
-            // Start a new Activity and ignore any results.
-            //startActivity(nextScreen)
-
-            // Start a new Activity and get the results.
-            registerForActivityResult(StartActivityForResult()) {
-                result -> onActivityResult(NEXT_ACTIVITY, result)
-            }.launch(nextScreen)
+            getContent.launch(nextScreen)
         }
     }
 
