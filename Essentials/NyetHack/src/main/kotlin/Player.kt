@@ -1,4 +1,4 @@
-import java.util.*
+import java.io.File
 
 class Player(
     _name: String,
@@ -7,17 +7,20 @@ class Player(
     private val isImmortal: Boolean
 ) {
     var name = _name
-        get() = field.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }
+        get() = "${field.capitalize()} of $hometown"
         private set(value) {
             field = value.trim()
         }
 
-    constructor(name: String) : this(
-        name,
-        isBlessed = true,
-        isImmortal = false
-    ) {
-        if (name.lowercase() == "kar") {
+    private val hometown by lazy { selectHometown() }
+
+    init {
+        require(healthPoints > 0) { "healthPoints must be greater than zero." }
+        require(name.isNotBlank()) { "Player must have a name" }
+    }
+
+    constructor(name: String) : this(name, isBlessed = true, isImmortal = false) {
+        if (name.toLowerCase() == "kar") {
             healthPoints = 40
         }
     }
@@ -43,4 +46,9 @@ class Player(
     fun castFireball(numFireballs: Int = 2) {
         println("A glass of fireball springs into existence. (x$numFireballs)")
     }
+
+    private fun selectHometown() = File("data/towns.txt")
+        .readText()
+        .split("\n")
+        .random()
 }
