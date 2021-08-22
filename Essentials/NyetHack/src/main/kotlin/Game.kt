@@ -1,5 +1,5 @@
 fun main() {
-    val player = Player()
+    val player = Player("James", 85, true, false)
     player.castFireball()
 
     // Player status
