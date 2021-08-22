@@ -7,7 +7,7 @@ fun main() {
     // Aura
     val auraColor = auraColor(isBlessed, healthPoints, isImmortal)
 
-    val healthStatus: String = formatHealthStatus(healthPoints, isBlessed)
+    val healthStatus = formatHealthStatus(healthPoints, isBlessed)
 
     // Player status
     printPlayerStatus(auraColor, isBlessed, name, healthStatus)
@@ -15,24 +15,8 @@ fun main() {
     castFireball()
 }
 
-private fun printPlayerStatus(
-    auraColor: String,
-    isBlessed: Boolean,
-    name: String,
-    healthStatus: String
-) {
-    println(
-        "(Aura: $auraColor) " +
-                "(Blessed: ${if (isBlessed) "YES" else "NO"})"
-    )
-    println("$name $healthStatus")
-}
-
-private fun auraColor(isBlessed: Boolean, healthPoints: Int, isImmortal: Boolean) =
-    if (isBlessed && healthPoints > 50 || isImmortal) "GREEN" else "NONE"
-
-private fun formatHealthStatus(healthPoints: Int, isBlessed: Boolean): String {
-    return when (healthPoints) {
+private fun formatHealthStatus(healthPoints: Int, isBlessed: Boolean): String =
+    when (healthPoints) {
         100 -> "is in excellent condition!"
         in 90..99 -> "has a few scratches."
         in 75..89 -> if (isBlessed) {
@@ -43,8 +27,28 @@ private fun formatHealthStatus(healthPoints: Int, isBlessed: Boolean): String {
         in 15..74 -> "looks pretty hurt."
         else -> "is in awful condition!"
     }
+
+private fun printPlayerStatus(
+    auraColor: String,
+    isBlessed: Boolean,
+    name: String,
+    healthStatus: String
+) {
+    println("(Aura: $auraColor) " +
+            "(Blessed: ${if (isBlessed) "YES" else "NO"})")
+    println("$name $healthStatus")
 }
 
-private fun castFireball(castNumber: Int = 3) {
-    println("A fireball spell is cast! (x$castNumber)")
+private fun auraColor(
+    isBlessed: Boolean,
+    healthPoints: Int,
+    isImmortal: Boolean
+): String {
+    val auraVisible = isBlessed && healthPoints > 50 || isImmortal
+    val auraColor = if (auraVisible) "GREEN" else "NONE"
+    return auraColor
+}
+
+private fun castFireball(numFireballs: Int = 2) {
+    println("A glass of fireball springs into existence. (x$numFireballs)")
 }
