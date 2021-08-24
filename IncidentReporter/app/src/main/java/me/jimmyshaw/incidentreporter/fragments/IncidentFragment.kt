@@ -16,9 +16,9 @@ import me.jimmyshaw.incidentreporter.models.Incident
 class IncidentFragment : Fragment() {
 
     private lateinit var incident: Incident
-    private lateinit var etDescription: EditText
-    private lateinit var btnDate: Button
-    private lateinit var cbResolved: CheckBox
+    private lateinit var descriptionEditText: EditText
+    private lateinit var dateButton: Button
+    private lateinit var resolvedCheckBox: CheckBox
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,11 +33,11 @@ class IncidentFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_incident, container, false)
 
-        etDescription = view.findViewById(R.id.et_incident_description) as EditText
-        btnDate = view.findViewById(R.id.btn_incident_date) as Button
-        cbResolved = view.findViewById(R.id.cb_incident_resolved) as CheckBox
+        descriptionEditText = view.findViewById(R.id.et_incident_description) as EditText
+        dateButton = view.findViewById(R.id.btn_incident_date) as Button
+        resolvedCheckBox = view.findViewById(R.id.cb_incident_resolved) as CheckBox
 
-        btnDate.apply {
+        dateButton.apply {
             text = incident.date.toString()
             isEnabled = false
         }
@@ -72,9 +72,9 @@ class IncidentFragment : Fragment() {
             }
         }
 
-        etDescription.addTextChangedListener(descriptionWatcher)
+        descriptionEditText.addTextChangedListener(descriptionWatcher)
 
-        cbResolved.apply {
+        resolvedCheckBox.apply {
             setOnCheckedChangeListener { _, isChecked ->
                 incident.isResolved = isChecked
             }
