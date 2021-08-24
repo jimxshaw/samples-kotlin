@@ -58,8 +58,16 @@ class IncidentListFragment : Fragment() {
     }
 
     private inner class IncidentHolder(view: View) : RecyclerView.ViewHolder(view) {
+        private lateinit var incident: Incident
+
         val descriptionTextView: TextView = itemView.findViewById(R.id.tv_incident_description)
         val dateTextView: TextView = itemView.findViewById(R.id.tv_incident_date)
+
+        fun bind(incident: Incident) {
+            this.incident = incident
+            descriptionTextView.text = this.incident.description
+            dateTextView.text = this.incident.date.toString()
+        }
     }
 
     private inner class IncidentAdapter(var incidents: List<Incident>) :
@@ -77,11 +85,7 @@ class IncidentListFragment : Fragment() {
 
         override fun onBindViewHolder(holder: IncidentHolder, position: Int) {
             val incident = incidents[position]
-
-            holder.apply {
-                descriptionTextView.text = incident.description
-                dateTextView.text = incident.date.toString()
-            }
+            holder.bind(incident)
         }
 
     }
