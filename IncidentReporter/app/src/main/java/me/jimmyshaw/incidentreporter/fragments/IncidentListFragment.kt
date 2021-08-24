@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import me.jimmyshaw.incidentreporter.R
+import me.jimmyshaw.incidentreporter.models.Incident
 import me.jimmyshaw.incidentreporter.viewmodels.IncidentListViewModel
 
 private const val TAG = "IncidentListFragment"
@@ -48,9 +49,31 @@ class IncidentListFragment : Fragment() {
     }
 
     private inner class IncidentHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val descriptionTextView : TextView = itemView.findViewById(R.id.tv_incident_description)
-        val dateTextView : TextView = itemView.findViewById(R.id.tv_incident_date)
+        val descriptionTextView: TextView = itemView.findViewById(R.id.tv_incident_description)
+        val dateTextView: TextView = itemView.findViewById(R.id.tv_incident_date)
     }
 
+    private inner class IncidentAdapter(var incidents: List<Incident>) :
+        RecyclerView.Adapter<IncidentHolder>() {
 
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IncidentHolder {
+            val view = layoutInflater.inflate(R.layout.list_item_incident, parent, false)
+
+            return IncidentHolder(view)
+        }
+
+        override fun getItemCount(): Int {
+            return incidents.size
+        }
+
+        override fun onBindViewHolder(holder: IncidentHolder, position: Int) {
+            val incident = incidents[position]
+
+            holder.apply {
+                descriptionTextView.text = incident.description
+                dateTextView.text = incident.date.toString()
+            }
+        }
+
+    }
 }
