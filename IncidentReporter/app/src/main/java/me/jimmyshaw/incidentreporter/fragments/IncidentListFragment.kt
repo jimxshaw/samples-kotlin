@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -57,16 +58,25 @@ class IncidentListFragment : Fragment() {
         incidentRecyclerView.adapter = adapter
     }
 
-    private inner class IncidentHolder(view: View) : RecyclerView.ViewHolder(view) {
+    private inner class IncidentHolder(view: View) : RecyclerView.ViewHolder(view),
+        View.OnClickListener {
         private lateinit var incident: Incident
 
         val descriptionTextView: TextView = itemView.findViewById(R.id.tv_incident_description)
         val dateTextView: TextView = itemView.findViewById(R.id.tv_incident_date)
 
+        init {
+            itemView.setOnClickListener(this)
+        }
+
         fun bind(incident: Incident) {
             this.incident = incident
             descriptionTextView.text = this.incident.description
             dateTextView.text = this.incident.date.toString()
+        }
+
+        override fun onClick(v: View?) {
+            Toast.makeText(context, "${incident.description} pressed!", Toast.LENGTH_SHORT).show()
         }
     }
 
