@@ -19,6 +19,7 @@ private const val TAG = "IncidentListFragment"
 class IncidentListFragment : Fragment() {
 
     private lateinit var incidentRecyclerView: RecyclerView
+    private var adapter: IncidentAdapter? = null
 
     private val incidentListViewModel: IncidentListViewModel by lazy {
         ViewModelProvider(this).get(IncidentListViewModel::class.java)
@@ -45,7 +46,15 @@ class IncidentListFragment : Fragment() {
         incidentRecyclerView = view.findViewById(R.id.rv_incident) as RecyclerView
         incidentRecyclerView.layoutManager = LinearLayoutManager(context)
 
+        updateUI()
+
         return view
+    }
+
+    private fun updateUI() {
+        val incidents = incidentListViewModel.incidents
+        adapter = IncidentAdapter(incidents)
+        incidentRecyclerView.adapter = adapter
     }
 
     private inner class IncidentHolder(view: View) : RecyclerView.ViewHolder(view) {
