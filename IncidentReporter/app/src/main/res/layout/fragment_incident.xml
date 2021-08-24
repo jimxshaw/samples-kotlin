@@ -30,7 +30,7 @@
             tools:text="Tue Aug 24 10:00 CT 2021" />
 
     <CheckBox
-            android:id="@+id/incident_resolved"
+            android:id="@+id/cb_incident_resolved"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/incident_resolved_label" />
