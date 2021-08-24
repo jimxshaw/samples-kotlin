@@ -4,7 +4,7 @@ import java.util.*
 
 data class Incident(
     val id: UUID = UUID.randomUUID(),
-    var description: String = "",
+    var title: String = "",
     var date: Date = Date(),
     var isResolved: Boolean = false
 )

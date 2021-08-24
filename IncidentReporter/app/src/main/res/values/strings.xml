@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">IncidentReporter</string>
-    <string name="incident_description_hint">Enter a description for the incident.</string>
-    <string name="incident_description_label">Description</string>
+    <string name="incident_title_hint">Enter a title for the incident.</string>
+    <string name="incident_title_label">Title</string>
     <string name="incident_details_label">Details</string>
     <string name="incident_resolved_label">Resolved</string>
 </resources>

@@ -7,10 +7,10 @@
         android:id="@+id/linearLayout">
 
     <TextView
-            android:id="@+id/tv_incident_description"
+            android:id="@+id/tv_incident_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Incident Description"
+            android:text="Incident Title"
             android:layout_marginTop="16dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -30,7 +30,7 @@
             app:layout_constraintEnd_toStartOf="@+id/iv_incident_resolved"
             android:layout_marginEnd="8dp"
             android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/tv_incident_description" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_incident_title" />
 
     <ImageView
             android:id="@+id/iv_incident_resolved"

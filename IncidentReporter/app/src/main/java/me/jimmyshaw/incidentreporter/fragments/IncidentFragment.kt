@@ -16,7 +16,7 @@ import me.jimmyshaw.incidentreporter.models.Incident
 class IncidentFragment : Fragment() {
 
     private lateinit var incident: Incident
-    private lateinit var descriptionEditText: EditText
+    private lateinit var titleEditText: EditText
     private lateinit var dateButton: Button
     private lateinit var resolvedCheckBox: CheckBox
 
@@ -33,7 +33,7 @@ class IncidentFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_incident, container, false)
 
-        descriptionEditText = view.findViewById(R.id.et_incident_description) as EditText
+        titleEditText = view.findViewById(R.id.et_incident_title) as EditText
         dateButton = view.findViewById(R.id.btn_incident_date) as Button
         resolvedCheckBox = view.findViewById(R.id.cb_incident_resolved) as CheckBox
 
@@ -64,7 +64,7 @@ class IncidentFragment : Fragment() {
                 before: Int,
                 count: Int
             ) {
-                incident.description = sequence.toString()
+                incident.title = sequence.toString()
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -72,7 +72,7 @@ class IncidentFragment : Fragment() {
             }
         }
 
-        descriptionEditText.addTextChangedListener(descriptionWatcher)
+        titleEditText.addTextChangedListener(descriptionWatcher)
 
         resolvedCheckBox.apply {
             setOnCheckedChangeListener { _, isChecked ->

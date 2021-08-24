@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -62,8 +63,10 @@ class IncidentListFragment : Fragment() {
         View.OnClickListener {
         private lateinit var incident: Incident
 
-        val descriptionTextView: TextView = itemView.findViewById(R.id.tv_incident_description)
-        val dateTextView: TextView = itemView.findViewById(R.id.tv_incident_date)
+        private val titleTextView: TextView =
+            itemView.findViewById(R.id.tv_incident_title)
+        private val dateTextView: TextView = itemView.findViewById(R.id.tv_incident_date)
+        private val resolvedImageView: ImageView = itemView.findViewById(R.id.iv_incident_resolved)
 
         init {
             itemView.setOnClickListener(this)
@@ -71,12 +74,19 @@ class IncidentListFragment : Fragment() {
 
         fun bind(incident: Incident) {
             this.incident = incident
-            descriptionTextView.text = this.incident.description
+
+            titleTextView.text = this.incident.title
             dateTextView.text = this.incident.date.toString()
+
+            resolvedImageView.visibility = if (incident.isResolved) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
         }
 
         override fun onClick(v: View?) {
-            Toast.makeText(context, "${incident.description} pressed!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "${incident.title} pressed!", Toast.LENGTH_SHORT).show()
         }
     }
 
