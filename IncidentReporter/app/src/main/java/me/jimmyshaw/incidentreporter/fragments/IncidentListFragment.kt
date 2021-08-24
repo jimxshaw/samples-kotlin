@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,6 +21,12 @@ class IncidentListFragment : Fragment() {
 
     private val incidentListViewModel: IncidentListViewModel by lazy {
         ViewModelProvider(this).get(IncidentListViewModel::class.java)
+    }
+
+    companion object {
+        fun newInstance(): IncidentListFragment {
+            return IncidentListFragment()
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,9 +47,10 @@ class IncidentListFragment : Fragment() {
         return view
     }
 
-    companion object {
-        fun newInstance(): IncidentListFragment {
-            return IncidentListFragment()
-        }
+    private inner class IncidentHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val descriptionTextView : TextView = itemView.findViewById(R.id.tv_incident_description)
+        val dateTextView : TextView = itemView.findViewById(R.id.tv_incident_date)
     }
+
+
 }
