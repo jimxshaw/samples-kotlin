@@ -1,5 +1,6 @@
 package me.jimmyshaw.incidentreporter.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,10 +17,20 @@ import androidx.recyclerview.widget.RecyclerView
 import me.jimmyshaw.incidentreporter.R
 import me.jimmyshaw.incidentreporter.models.Incident
 import me.jimmyshaw.incidentreporter.viewmodels.IncidentListViewModel
+import java.util.*
 
 private const val TAG = "IncidentListFragment"
 
 class IncidentListFragment : Fragment() {
+
+    /*
+     * Required interface for hosting activities.
+     */
+    interface Callbacks {
+        fun onCrimeSelected(crimeId: UUID)
+    }
+
+    private var callbacks: Callbacks? = null
 
     private lateinit var incidentRecyclerView: RecyclerView
 
@@ -36,6 +47,11 @@ class IncidentListFragment : Fragment() {
         fun newInstance(): IncidentListFragment {
             return IncidentListFragment()
         }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callbacks = context as Callbacks?
     }
 
     override fun onCreateView(
@@ -73,6 +89,11 @@ class IncidentListFragment : Fragment() {
         )
     }
 
+    override fun onDetach() {
+        super.onDetach()
+        callbacks = null
+    }
+
     private fun updateUI(incidents: List<Incident>) {
         adapter = IncidentAdapter(incidents)
         incidentRecyclerView.adapter = adapter
@@ -105,7 +126,7 @@ class IncidentListFragment : Fragment() {
         }
 
         override fun onClick(v: View?) {
-            Toast.makeText(context, "${incident.title} pressed!", Toast.LENGTH_SHORT).show()
+            callbacks?.onCrimeSelected(incident.id)
         }
     }
 
