@@ -8,4 +8,6 @@ import me.jimmyshaw.incidentreporter.models.Incident
 @Database(entities = [Incident::class], version = 1)
 @TypeConverters(IncidentTypeConverters::class)
 abstract class IncidentDatabase : RoomDatabase() {
+
+    abstract fun incidentDoa(): IncidentDao
 }
