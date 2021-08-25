@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity(), IncidentListFragment.Callbacks {
             supportFragmentManager.findFragmentById(R.id.fragment_container)
 
         if (currentFragment == null) {
-            val fragment = IncidentListFragment.newInstance()
+            val fragment = IncidentListFragment()
 
             supportFragmentManager
                 .beginTransaction()

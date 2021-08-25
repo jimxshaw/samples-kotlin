@@ -40,12 +40,6 @@ class IncidentListFragment : Fragment() {
         ViewModelProvider(this).get(IncidentListViewModel::class.java)
     }
 
-    companion object {
-        fun newInstance(): IncidentListFragment {
-            return IncidentListFragment()
-        }
-    }
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         callbacks = context as Callbacks?

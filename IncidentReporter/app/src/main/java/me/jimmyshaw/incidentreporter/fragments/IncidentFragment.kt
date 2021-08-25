@@ -50,7 +50,7 @@ class IncidentFragment : Fragment() {
 
         val incidentId: UUID = arguments?.getSerializable(ARG_INCIDENT_ID) as UUID
 
-        incidentDetailViewModel.loadCrime(incidentId)
+        incidentDetailViewModel.loadIncident(incidentId)
     }
 
     override fun onCreateView(

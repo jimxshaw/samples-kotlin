@@ -22,7 +22,7 @@ class IncidentDetailViewModel : ViewModel() {
             incidentRepository.getIncident(incidentId)
         }
 
-    fun loadCrime(incidentId: UUID) {
+    fun loadIncident(incidentId: UUID) {
         incidentIdLiveData.value = incidentId
     }
 
