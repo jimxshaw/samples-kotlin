@@ -2,10 +2,14 @@ package me.jimmyshaw.incidentreporter
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import me.jimmyshaw.incidentreporter.fragments.IncidentFragment
+import android.util.Log
 import me.jimmyshaw.incidentreporter.fragments.IncidentListFragment
+import java.util.*
 
-class MainActivity : AppCompatActivity() {
+private const val TAG = "MainActivity"
+
+class MainActivity : AppCompatActivity(), IncidentListFragment.Callbacks {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -14,12 +18,16 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.fragment_container)
 
         if (currentFragment == null) {
-            val fragment = IncidentListFragment.newInstance()
+            val fragment = IncidentListFragment()
 
             supportFragmentManager
                 .beginTransaction()
                 .add(R.id.fragment_container, fragment)
                 .commit()
         }
+    }
+
+    override fun onCrimeSelected(crimeId: UUID) {
+        Log.d(TAG, "MainActivity.onCrimeSelected: $crimeId")
     }
 }
