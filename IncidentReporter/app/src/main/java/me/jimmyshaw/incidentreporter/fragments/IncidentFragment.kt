@@ -3,6 +3,7 @@ package me.jimmyshaw.incidentreporter.fragments
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ import me.jimmyshaw.incidentreporter.R
 import me.jimmyshaw.incidentreporter.models.Incident
 import java.util.*
 
+private const val TAG = "IncidentFragment"
 private const val ARG_INCIDENT_ID = "incident_id"
 
 class IncidentFragment : Fragment() {
@@ -39,6 +41,12 @@ class IncidentFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         incident = Incident()
+
+        val incidentId: UUID = arguments?.getSerializable(ARG_INCIDENT_ID) as UUID
+
+        Log.d(TAG, "args bundle incident ID: $incidentId")
+
+        // Eventually, load incident from the database.
     }
 
     override fun onCreateView(
