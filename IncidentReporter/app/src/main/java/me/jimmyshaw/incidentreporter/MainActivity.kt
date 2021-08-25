@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity(), IncidentListFragment.Callbacks {
         }
     }
 
-    override fun onCrimeSelected(crimeId: UUID) {
+    override fun onIncidentSelected(crimeId: UUID) {
         val fragment = IncidentFragment.newInstance(crimeId)
 
         // The Fragment must be added to the backstack in order for

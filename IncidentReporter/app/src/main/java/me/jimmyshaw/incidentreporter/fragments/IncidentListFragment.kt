@@ -24,7 +24,7 @@ class IncidentListFragment : Fragment() {
      * Required interface for hosting activities.
      */
     interface Callbacks {
-        fun onCrimeSelected(crimeId: UUID)
+        fun onIncidentSelected(crimeId: UUID)
     }
 
     private var callbacks: Callbacks? = null
@@ -105,6 +105,20 @@ class IncidentListFragment : Fragment() {
         inflater.inflate(R.menu.fragment_incident_list, menu)
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return super.onOptionsItemSelected(item)
+
+        return when (item.itemId) {
+            R.id.menu_new_incident -> {
+                val incident = Incident()
+                incidentListViewModel.addIncident(incident)
+                callbacks?.onIncidentSelected(incident.id)
+                true
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
+    }
+
     private fun updateUI(incidents: List<Incident>) {
         adapter = IncidentAdapter(incidents)
         incidentRecyclerView.adapter = adapter
@@ -137,7 +151,7 @@ class IncidentListFragment : Fragment() {
         }
 
         override fun onClick(v: View?) {
-            callbacks?.onCrimeSelected(incident.id)
+            callbacks?.onIncidentSelected(incident.id)
         }
     }
 
