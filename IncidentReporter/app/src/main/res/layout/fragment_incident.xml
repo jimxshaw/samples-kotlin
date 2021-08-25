@@ -9,13 +9,13 @@
             style="?android:listSeparatorTextViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/incident_description_label" />
+            android:text="@string/incident_title_label" />
 
     <EditText
-            android:id="@+id/et_incident_description"
+            android:id="@+id/et_incident_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/incident_description_hint" />
+            android:hint="@string/incident_title_hint" />
 
     <TextView
             style="?android:listSeparatorTextViewStyle"

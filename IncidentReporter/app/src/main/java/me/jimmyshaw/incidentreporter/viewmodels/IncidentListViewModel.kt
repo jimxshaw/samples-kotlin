@@ -1,18 +1,10 @@
 package me.jimmyshaw.incidentreporter.viewmodels
 
 import androidx.lifecycle.ViewModel
-import me.jimmyshaw.incidentreporter.models.Incident
+import me.jimmyshaw.incidentreporter.IncidentRepository
 
 class IncidentListViewModel : ViewModel() {
-    val incidents = mutableListOf<Incident>()
 
-    init {
-        for (i in 0 until 50) {
-            val incident = Incident()
-
-            incident.description = "Incident $i"
-            incident.isResolved = i % 2 == 0
-            incidents.add(incident)
-        }
-    }
+    private val incidentRepository = IncidentRepository.get()
+    val incidentListLiveData = incidentRepository.getIncidents()
 }
