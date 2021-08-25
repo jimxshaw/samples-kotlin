@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity(), IncidentListFragment.Callbacks {
             supportFragmentManager.findFragmentById(R.id.fragment_container)
 
         if (currentFragment == null) {
-            val fragment = IncidentListFragment()
+            val fragment = IncidentListFragment.newInstance()
 
             supportFragmentManager
                 .beginTransaction()
@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity(), IncidentListFragment.Callbacks {
     }
 
     override fun onCrimeSelected(crimeId: UUID) {
-        val fragment = IncidentFragment()
+        val fragment = IncidentFragment.newInstance(crimeId)
 
         // The Fragment must be added to the backstack in order for
         // the Back Button to go back to the IncidentListFragment. Otherwise,

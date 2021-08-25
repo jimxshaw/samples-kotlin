@@ -12,6 +12,9 @@ import android.widget.EditText
 import androidx.fragment.app.Fragment
 import me.jimmyshaw.incidentreporter.R
 import me.jimmyshaw.incidentreporter.models.Incident
+import java.util.*
+
+private const val ARG_INCIDENT_ID = "incident_id"
 
 class IncidentFragment : Fragment() {
 
@@ -19,6 +22,18 @@ class IncidentFragment : Fragment() {
     private lateinit var titleEditText: EditText
     private lateinit var dateButton: Button
     private lateinit var resolvedCheckBox: CheckBox
+
+    companion object {
+        fun newInstance(incidentId: UUID): IncidentFragment {
+            val args = Bundle().apply {
+                putSerializable(ARG_INCIDENT_ID, incidentId)
+            }
+
+            return IncidentFragment().apply {
+                arguments = args
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
