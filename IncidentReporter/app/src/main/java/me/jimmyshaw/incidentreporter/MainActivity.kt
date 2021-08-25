@@ -3,6 +3,7 @@ package me.jimmyshaw.incidentreporter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import me.jimmyshaw.incidentreporter.fragments.IncidentFragment
 import me.jimmyshaw.incidentreporter.fragments.IncidentListFragment
 import java.util.*
 
@@ -28,6 +29,15 @@ class MainActivity : AppCompatActivity(), IncidentListFragment.Callbacks {
     }
 
     override fun onCrimeSelected(crimeId: UUID) {
-        Log.d(TAG, "MainActivity.onCrimeSelected: $crimeId")
+        val fragment = IncidentFragment()
+
+        // The Fragment must be added to the backstack in order for
+        // the Back Button to go back to the IncidentListFragment. Otherwise,
+        // the Back Button will dismiss MainActivity.
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .addToBackStack(null)
+            .commit()
     }
 }
