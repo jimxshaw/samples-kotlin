@@ -125,7 +125,12 @@ class IncidentFragment : Fragment() {
     private fun updateUI() {
         titleEditText.setText(incident.title)
         dateButton.text = incident.date.toString()
-        resolvedCheckBox.isChecked = incident.isResolved
+        resolvedCheckBox.apply {
+            isChecked = incident.isResolved
+            // Skip the checkbox getting checked animation by
+            // programmatically setting the checkbox to checked.
+            jumpDrawablesToCurrentState()
+        }
     }
 
 }
