@@ -28,8 +28,8 @@ class MainActivity : AppCompatActivity(), IncidentListFragment.Callbacks {
         }
     }
 
-    override fun onIncidentSelected(crimeId: UUID) {
-        val fragment = IncidentFragment.newInstance(crimeId)
+    override fun onIncidentSelected(incidentId: UUID) {
+        val fragment = IncidentFragment.newInstance(incidentId)
 
         // The Fragment must be added to the backstack in order for
         // the Back Button to go back to the IncidentListFragment. Otherwise,

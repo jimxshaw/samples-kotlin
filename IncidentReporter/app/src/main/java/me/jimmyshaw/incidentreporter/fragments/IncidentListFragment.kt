@@ -24,7 +24,7 @@ class IncidentListFragment : Fragment() {
      * Required interface for hosting activities.
      */
     interface Callbacks {
-        fun onIncidentSelected(crimeId: UUID)
+        fun onIncidentSelected(incidentId: UUID)
     }
 
     private var callbacks: Callbacks? = null
@@ -47,9 +47,6 @@ class IncidentListFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // This is crucial as it allows the FragmentManager to
-        // know that IncidentListFragment needs to receive callbacks.
         setHasOptionsMenu(true)
     }
 
@@ -95,13 +92,10 @@ class IncidentListFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-
         inflater.inflate(R.menu.fragment_incident_list, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return super.onOptionsItemSelected(item)
-
         return when (item.itemId) {
             R.id.menu_new_incident -> {
                 val incident = Incident()
