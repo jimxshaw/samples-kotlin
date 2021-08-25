@@ -3,7 +3,6 @@ package me.jimmyshaw.incidentreporter.fragments
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,8 +10,11 @@ import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.Observer
 import me.jimmyshaw.incidentreporter.R
 import me.jimmyshaw.incidentreporter.models.Incident
+import me.jimmyshaw.incidentreporter.viewmodels.IncidentDetailViewModel
 import java.util.*
 
 private const val TAG = "IncidentFragment"
@@ -24,6 +26,10 @@ class IncidentFragment : Fragment() {
     private lateinit var titleEditText: EditText
     private lateinit var dateButton: Button
     private lateinit var resolvedCheckBox: CheckBox
+
+    private val incidentDetailViewModel: IncidentDetailViewModel by lazy {
+        ViewModelProvider(this).get(IncidentDetailViewModel::class.java)
+    }
 
     companion object {
         fun newInstance(incidentId: UUID): IncidentFragment {
@@ -44,9 +50,7 @@ class IncidentFragment : Fragment() {
 
         val incidentId: UUID = arguments?.getSerializable(ARG_INCIDENT_ID) as UUID
 
-        Log.d(TAG, "args bundle incident ID: $incidentId")
-
-        // Eventually, load incident from the database.
+        incidentDetailViewModel.loadCrime(incidentId)
     }
 
     override fun onCreateView(
@@ -66,6 +70,20 @@ class IncidentFragment : Fragment() {
         }
 
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        incidentDetailViewModel.incidentLiveData.observe(
+            viewLifecycleOwner,
+            Observer { incident ->
+                incident?.let {
+                    this.incident = incident
+                    updateUI()
+                }
+            }
+        )
     }
 
     override fun onStart() {
@@ -102,6 +120,12 @@ class IncidentFragment : Fragment() {
                 incident.isResolved = isChecked
             }
         }
+    }
+
+    private fun updateUI() {
+        titleEditText.setText(incident.title)
+        dateButton.text = incident.date.toString()
+        resolvedCheckBox.isChecked = incident.isResolved
     }
 
 }
