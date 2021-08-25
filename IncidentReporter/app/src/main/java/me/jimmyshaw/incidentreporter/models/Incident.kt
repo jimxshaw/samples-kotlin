@@ -6,7 +6,7 @@ import java.util.*
 
 @Entity
 data class Incident(
-    @PrimaryKey val id: UUID = UUID.randomUUID(),
+    @PrimaryKey var id: UUID = UUID.randomUUID(),
     var title: String = "",
     var date: Date = Date(),
     var isResolved: Boolean = false
