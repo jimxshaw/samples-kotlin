@@ -122,6 +122,14 @@ class IncidentFragment : Fragment() {
         }
     }
 
+    override fun onStop() {
+        super.onStop()
+
+        // The onStop method is called every time this fragment moves to
+        // the stopped state. Save the incident details whenever that happens.
+        incidentDetailViewModel.saveIncident(incident)
+    }
+
     private fun updateUI() {
         titleEditText.setText(incident.title)
         dateButton.text = incident.date.toString()

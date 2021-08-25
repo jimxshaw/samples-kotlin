@@ -13,6 +13,10 @@ class IncidentDetailViewModel : ViewModel() {
     private val incidentRepository = IncidentRepository.get()
     private val incidentIdLiveData = MutableLiveData<UUID>()
 
+    // Using a transformation means IncidentFragment only has to observe the
+    // exposed incidentLiveData one time. When the fragment changes the ID it
+    // wants to display, the ViewModel just publishes the new incident data
+    // to the existing live data stream.
     var incidentLiveData: LiveData<Incident?> =
         Transformations.switchMap(incidentIdLiveData) { incidentId ->
             incidentRepository.getIncident(incidentId)
@@ -20,5 +24,9 @@ class IncidentDetailViewModel : ViewModel() {
 
     fun loadCrime(incidentId: UUID) {
         incidentIdLiveData.value = incidentId
+    }
+
+    fun saveIncident(incident: Incident) {
+        incidentRepository.updateIncident(incident)
     }
 }
