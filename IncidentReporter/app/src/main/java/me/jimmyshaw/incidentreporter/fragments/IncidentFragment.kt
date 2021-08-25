@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.Observer
@@ -64,16 +65,20 @@ class IncidentFragment : Fragment() {
         dateButton = view.findViewById(R.id.btn_incident_date) as Button
         resolvedCheckBox = view.findViewById(R.id.cb_incident_resolved) as CheckBox
 
-        dateButton.apply {
-            text = incident.date.toString()
-            isEnabled = false
-        }
+//        dateButton.apply {
+//            text = incident.date.toString()
+//            isEnabled = false
+//        }
 
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val incidentId = arguments?.getSerializable(ARG_INCIDENT_ID) as UUID
+
+        incidentDetailViewModel.loadIncident(incidentId)
 
         incidentDetailViewModel.incidentLiveData.observe(
             viewLifecycleOwner,
@@ -84,6 +89,9 @@ class IncidentFragment : Fragment() {
                 }
             }
         )
+
+        val appCompatActivity = activity as AppCompatActivity
+        appCompatActivity.supportActionBar?.setTitle(R.string.new_incident)
     }
 
     override fun onStart() {
