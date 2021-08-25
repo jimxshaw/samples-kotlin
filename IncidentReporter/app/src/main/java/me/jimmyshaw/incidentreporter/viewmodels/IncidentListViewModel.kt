@@ -6,5 +6,5 @@ import me.jimmyshaw.incidentreporter.IncidentRepository
 class IncidentListViewModel : ViewModel() {
 
     private val incidentRepository = IncidentRepository.get()
-    val incidents = incidentRepository.getIncidents()
+    val incidentListLiveData = incidentRepository.getIncidents()
 }
