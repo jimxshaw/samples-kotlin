@@ -1,6 +1,7 @@
 package me.jimmyshaw.incidentreporter
 
 import android.content.Context
+import androidx.lifecycle.LiveData
 import androidx.room.Room
 import me.jimmyshaw.incidentreporter.models.Incident
 import me.jimmyshaw.incidentreporter.persistence.IncidentDatabase
@@ -19,11 +20,11 @@ class IncidentRepository private constructor(context: Context) {
 
     private val incidentDao = database.incidentDoa()
 
-    fun getIncidents(): List<Incident> {
+    fun getIncidents(): LiveData<List<Incident>> {
         return incidentDao.getIncidents()
     }
 
-    fun getIncident(id: UUID): Incident? {
+    fun getIncident(id: UUID): LiveData<Incident?> {
         return incidentDao.getIncident(id)
     }
 
