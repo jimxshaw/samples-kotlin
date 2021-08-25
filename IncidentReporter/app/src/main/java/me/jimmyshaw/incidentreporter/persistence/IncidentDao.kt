@@ -1,5 +1,6 @@
 package me.jimmyshaw.incidentreporter.persistence
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Query
 import me.jimmyshaw.incidentreporter.models.Incident
@@ -9,8 +10,8 @@ import java.util.*
 interface IncidentDao {
 
     @Query("SELECT * FROM incident")
-    fun getIncidents(): List<Incident>
+    fun getIncidents(): LiveData<List<Incident>>
 
     @Query("SELECT * FROM incident WHERE id=(:id)")
-    fun getIncident(id: UUID): Incident?
+    fun getIncident(id: UUID): LiveData<Incident?>
 }
