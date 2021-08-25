@@ -1,13 +1,11 @@
 package me.jimmyshaw.incidentreporter.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -16,10 +14,20 @@ import androidx.recyclerview.widget.RecyclerView
 import me.jimmyshaw.incidentreporter.R
 import me.jimmyshaw.incidentreporter.models.Incident
 import me.jimmyshaw.incidentreporter.viewmodels.IncidentListViewModel
+import java.util.*
 
 private const val TAG = "IncidentListFragment"
 
 class IncidentListFragment : Fragment() {
+
+    /*
+     * Required interface for hosting activities.
+     */
+    interface Callbacks {
+        fun onIncidentSelected(incidentId: UUID)
+    }
+
+    private var callbacks: Callbacks? = null
 
     private lateinit var incidentRecyclerView: RecyclerView
 
@@ -32,10 +40,14 @@ class IncidentListFragment : Fragment() {
         ViewModelProvider(this).get(IncidentListViewModel::class.java)
     }
 
-    companion object {
-        fun newInstance(): IncidentListFragment {
-            return IncidentListFragment()
-        }
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callbacks = context as Callbacks?
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(
@@ -73,6 +85,28 @@ class IncidentListFragment : Fragment() {
         )
     }
 
+    override fun onDetach() {
+        super.onDetach()
+        callbacks = null
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.fragment_incident_list, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_new_incident -> {
+                val incident = Incident()
+                incidentListViewModel.addIncident(incident)
+                callbacks?.onIncidentSelected(incident.id)
+                true
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
+    }
+
     private fun updateUI(incidents: List<Incident>) {
         adapter = IncidentAdapter(incidents)
         incidentRecyclerView.adapter = adapter
@@ -105,7 +139,7 @@ class IncidentListFragment : Fragment() {
         }
 
         override fun onClick(v: View?) {
-            Toast.makeText(context, "${incident.title} pressed!", Toast.LENGTH_SHORT).show()
+            callbacks?.onIncidentSelected(incident.id)
         }
     }
 

@@ -9,9 +9,17 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.Observer
 import me.jimmyshaw.incidentreporter.R
 import me.jimmyshaw.incidentreporter.models.Incident
+import me.jimmyshaw.incidentreporter.viewmodels.IncidentDetailViewModel
+import java.util.*
+
+private const val TAG = "IncidentFragment"
+private const val ARG_INCIDENT_ID = "incident_id"
 
 class IncidentFragment : Fragment() {
 
@@ -20,10 +28,30 @@ class IncidentFragment : Fragment() {
     private lateinit var dateButton: Button
     private lateinit var resolvedCheckBox: CheckBox
 
+    private val incidentDetailViewModel: IncidentDetailViewModel by lazy {
+        ViewModelProvider(this).get(IncidentDetailViewModel::class.java)
+    }
+
+    companion object {
+        fun newInstance(incidentId: UUID): IncidentFragment {
+            val args = Bundle().apply {
+                putSerializable(ARG_INCIDENT_ID, incidentId)
+            }
+
+            return IncidentFragment().apply {
+                arguments = args
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         incident = Incident()
+
+        val incidentId: UUID = arguments?.getSerializable(ARG_INCIDENT_ID) as UUID
+
+        incidentDetailViewModel.loadIncident(incidentId)
     }
 
     override fun onCreateView(
@@ -37,12 +65,33 @@ class IncidentFragment : Fragment() {
         dateButton = view.findViewById(R.id.btn_incident_date) as Button
         resolvedCheckBox = view.findViewById(R.id.cb_incident_resolved) as CheckBox
 
-        dateButton.apply {
-            text = incident.date.toString()
-            isEnabled = false
-        }
+//        dateButton.apply {
+//            text = incident.date.toString()
+//            isEnabled = false
+//        }
 
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val incidentId = arguments?.getSerializable(ARG_INCIDENT_ID) as UUID
+
+        incidentDetailViewModel.loadIncident(incidentId)
+
+        incidentDetailViewModel.incidentLiveData.observe(
+            viewLifecycleOwner,
+            Observer { incident ->
+                incident?.let {
+                    this.incident = incident
+                    updateUI()
+                }
+            }
+        )
+
+        val appCompatActivity = activity as AppCompatActivity
+        appCompatActivity.supportActionBar?.setTitle(R.string.new_incident)
     }
 
     override fun onStart() {
@@ -78,6 +127,25 @@ class IncidentFragment : Fragment() {
             setOnCheckedChangeListener { _, isChecked ->
                 incident.isResolved = isChecked
             }
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+
+        // The onStop method is called every time this fragment moves to
+        // the stopped state. Save the incident details whenever that happens.
+        incidentDetailViewModel.saveIncident(incident)
+    }
+
+    private fun updateUI() {
+        titleEditText.setText(incident.title)
+        dateButton.text = incident.date.toString()
+        resolvedCheckBox.apply {
+            isChecked = incident.isResolved
+            // Skip the checkbox getting checked animation by
+            // programmatically setting the checkbox to checked.
+            jumpDrawablesToCurrentState()
         }
     }
 

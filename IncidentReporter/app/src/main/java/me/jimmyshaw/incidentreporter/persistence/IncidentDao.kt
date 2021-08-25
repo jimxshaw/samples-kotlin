@@ -2,7 +2,9 @@ package me.jimmyshaw.incidentreporter.persistence
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
+import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 import me.jimmyshaw.incidentreporter.models.Incident
 import java.util.*
 
@@ -14,4 +16,10 @@ interface IncidentDao {
 
     @Query("SELECT * FROM incident WHERE id=(:id)")
     fun getIncident(id: UUID): LiveData<Incident?>
+
+    @Update
+    fun updateIncident(incident: Incident)
+
+    @Insert
+    fun addIncident(incident: Incident)
 }
