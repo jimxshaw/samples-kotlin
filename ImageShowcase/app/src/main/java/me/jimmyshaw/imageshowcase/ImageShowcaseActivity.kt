@@ -2,6 +2,7 @@ package me.jimmyshaw.imageshowcase
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import me.jimmyshaw.imageshowcase.fragments.ImageShowcaseFragment
 
 class ImageShowcaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
