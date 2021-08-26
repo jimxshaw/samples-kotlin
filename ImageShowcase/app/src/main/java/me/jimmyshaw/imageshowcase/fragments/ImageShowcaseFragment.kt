@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import me.jimmyshaw.imageshowcase.R
+import me.jimmyshaw.imageshowcase.api.FlickrApi
+import retrofit2.Retrofit
 
 class ImageShowcaseFragment : Fragment() {
 
@@ -15,6 +17,16 @@ class ImageShowcaseFragment : Fragment() {
 
     companion object {
         fun newInstance() = ImageShowcaseFragment()
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val retrofit: Retrofit = Retrofit.Builder()
+            .baseUrl("https://www.flickr.com/")
+            .build()
+
+        val flickrApi: FlickrApi = retrofit.create(FlickrApi::class.java)
     }
 
     override fun onCreateView(
