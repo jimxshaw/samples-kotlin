@@ -1,15 +1,16 @@
 package me.jimmyshaw.imageshowcase.api
 
-import android.content.res.Resources
-import me.jimmyshaw.imageshowcase.R
+import me.jimmyshaw.imageshowcase.BuildConfig
 import retrofit2.Call
 import retrofit2.http.GET
-import retrofit2.http.Url
+import retrofit2.http.Query
 
 interface FlickrApi {
 
-    @GET
+    @GET("services/rest/?method=flickr.interestingness.getList&format=json&nojsoncallback=&extras=url_s")
     fun fetchImages(
-        @Url url: String = Resources.getSystem().getString(R.string.flickr_get_images_url)
+        // https://guides.codepath.com/android/Storing-Secret-Keys-in-Android
+        // Note that the BuildConfig approach does not work in the @GET annotation.
+        @Query("api_key") apiKey: String? = BuildConfig.FLICKR_API_KEY
     ): Call<String>
 }

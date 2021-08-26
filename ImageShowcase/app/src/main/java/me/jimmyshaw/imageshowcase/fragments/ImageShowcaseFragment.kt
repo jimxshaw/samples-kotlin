@@ -11,13 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import me.jimmyshaw.imageshowcase.R
-import me.jimmyshaw.imageshowcase.api.FlickrApi
 import me.jimmyshaw.imageshowcase.api.FlickrFetchr
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.scalars.ScalarsConverterFactory
 
 private const val TAG = "ImageShowcaseFragment"
 
