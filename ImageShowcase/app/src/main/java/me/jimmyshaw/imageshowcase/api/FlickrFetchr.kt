@@ -26,7 +26,7 @@ class FlickrFetchr {
 
     fun fetchContents(): LiveData<String> {
         val responseLiveData: MutableLiveData<String> = MutableLiveData()
-        val flickrRequest: Call<String> = flickrApi.fetchContents()
+        val flickrRequest: Call<String> = flickrApi.fetchImages()
 
         flickrRequest.enqueue(object : Callback<String> {
             override fun onFailure(call: Call<String>, t: Throwable) {

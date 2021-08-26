@@ -21,8 +21,3 @@ class Util {
         }
     }
 }
-
-enum class PropertyFiles(val fileName: String) {
-    SECRET("secret.properties"),
-    CONFIG("config.properties")
-}
