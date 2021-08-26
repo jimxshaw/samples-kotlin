@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import me.jimmyshaw.imageshowcase.R
 import me.jimmyshaw.imageshowcase.api.FlickrApi
 import retrofit2.Retrofit
+import retrofit2.converter.scalars.ScalarsConverterFactory
 
 class ImageShowcaseFragment : Fragment() {
 
@@ -24,6 +25,7 @@ class ImageShowcaseFragment : Fragment() {
 
         val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl("https://www.flickr.com/")
+            .addConverterFactory(ScalarsConverterFactory.create())
             .build()
 
         val flickrApi: FlickrApi = retrofit.create(FlickrApi::class.java)
