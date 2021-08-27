@@ -16,6 +16,14 @@ class BoxDrawingView(context: Context, attrs: AttributeSet? = null) : View(conte
     private var currentBox: Box? = null
     private val boxen = mutableListOf<Box>()
 
+    private val boxPaint = Paint().apply {
+        color = 0x22ff0000.toInt()
+    }
+
+    private val backgroundPaint = Paint().apply {
+        color = 0xfff8efe0.toInt()
+    }
+
     override fun onTouchEvent(event: MotionEvent): Boolean {
         val current = PointF(event.x, event.y)
 
@@ -30,7 +38,7 @@ class BoxDrawingView(context: Context, attrs: AttributeSet? = null) : View(conte
                     boxen.add(it)
                 }
             }
-            
+
             MotionEvent.ACTION_MOVE -> {
                 action = "ACTION_MOVE"
 
@@ -53,6 +61,15 @@ class BoxDrawingView(context: Context, attrs: AttributeSet? = null) : View(conte
         Log.i(TAG, "$action at x=${current.x}, y=${current.y}")
 
         return true
+    }
+
+    override fun onDraw(canvas: Canvas) {
+        // Fill the background.
+        canvas.drawPaint(backgroundPaint)
+
+        boxen.forEach { box ->
+            canvas.drawRect(box.left, box.top, box.right, box.bottom, boxPaint)
+        }
     }
 
     private fun updateCurrentBox(current: PointF) {
