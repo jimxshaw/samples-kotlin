@@ -12,5 +12,5 @@ interface FlickrApi {
         // https://guides.codepath.com/android/Storing-Secret-Keys-in-Android
         // Note that the BuildConfig approach does not work in the @GET annotation.
         @Query("api_key") apiKey: String? = BuildConfig.FLICKR_API_KEY
-    ): Call<String>
+    ): Call<FlickrResponse>
 }
