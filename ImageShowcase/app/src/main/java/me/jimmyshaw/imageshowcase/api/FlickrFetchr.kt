@@ -3,11 +3,14 @@ package me.jimmyshaw.imageshowcase.api
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import me.jimmyshaw.imageshowcase.models.ShowcaseItem
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
-import retrofit2.converter.scalars.ScalarsConverterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 
 private const val TAG = "FlickrFetchr"
 
@@ -18,27 +21,38 @@ class FlickrFetchr {
     init {
         val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl("https://api.flickr.com/")
-            .addConverterFactory(ScalarsConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
             .build()
 
         flickrApi = retrofit.create(FlickrApi::class.java)
     }
 
-    fun fetchImages(): LiveData<String> {
-        val responseLiveData: MutableLiveData<String> = MutableLiveData()
-        val flickrRequest: Call<String> = flickrApi.fetchImages()
+    fun fetchImages(): LiveData<List<ShowcaseItem>> {
+        val responseLiveData: MutableLiveData<List<ShowcaseItem>> = MutableLiveData()
+        val flickrRequest: Call<FlickrResponse> = flickrApi.fetchImages()
 
-        flickrRequest.enqueue(object : Callback<String> {
-            override fun onFailure(call: Call<String>, t: Throwable) {
+        flickrRequest.enqueue(object : Callback<FlickrResponse> {
+            override fun onFailure(call: Call<FlickrResponse>, t: Throwable) {
                 Log.e(TAG, "Failed to fetch photos", t)
             }
 
             override fun onResponse(
-                call: Call<String>,
-                response: Response<String>
+                call: Call<FlickrResponse>,
+                response: Response<FlickrResponse>
             ) {
                 Log.d(TAG, "Response received")
-                responseLiveData.value = response.body()
+
+                val flickrResponse: FlickrResponse? = response.body()
+                val imageResponse: ImageResponse? = flickrResponse?.images
+
+                var showcaseItems: List<ShowcaseItem> = imageResponse?.showcaseItems
+                    ?: mutableListOf()
+
+                showcaseItems = showcaseItems.filterNot {
+                    it.url.isBlank()
+                }
+
+                responseLiveData.value = showcaseItems
             }
         })
         return responseLiveData

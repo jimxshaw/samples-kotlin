@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import me.jimmyshaw.imageshowcase.R
 import me.jimmyshaw.imageshowcase.api.FlickrFetchr
+import me.jimmyshaw.imageshowcase.models.ShowcaseItem
 
 private const val TAG = "ImageShowcaseFragment"
 
@@ -26,10 +27,10 @@ class ImageShowcaseFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val flickrLiveData: LiveData<String> = FlickrFetchr().fetchImages()
+        val flickrLiveData: LiveData<List<ShowcaseItem>> = FlickrFetchr().fetchImages()
 
-        flickrLiveData.observe(this, Observer { responseString ->
-            Log.d(TAG, "Response received: $responseString")
+        flickrLiveData.observe(this, Observer { showcaseItem ->
+            Log.d(TAG, "Response received: $showcaseItem")
         })
     }
 
