@@ -19,13 +19,9 @@ class FlickrFetchr {
     private val flickrApi: FlickrApi
 
     init {
-        val gson: Gson = GsonBuilder()
-            .setLenient()
-            .create()
-
         val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl("https://api.flickr.com/")
-            .addConverterFactory(GsonConverterFactory.create(gson))
+            .addConverterFactory(GsonConverterFactory.create())
             .build()
 
         flickrApi = retrofit.create(FlickrApi::class.java)
@@ -47,9 +43,9 @@ class FlickrFetchr {
                 Log.d(TAG, "Response received")
 
                 val flickrResponse: FlickrResponse? = response.body()
-                val photoResponse: ImageResponse? = flickrResponse?.images
+                val imageResponse: ImageResponse? = flickrResponse?.images
 
-                var showcaseItems: List<ShowcaseItem> = photoResponse?.showcaseItems
+                var showcaseItems: List<ShowcaseItem> = imageResponse?.showcaseItems
                     ?: mutableListOf()
 
                 showcaseItems = showcaseItems.filterNot {
