@@ -62,4 +62,24 @@ class ImageShowcaseFragment : Fragment() {
     private class ImageHolder(itemTextView: TextView) : RecyclerView.ViewHolder(itemTextView) {
         val bindTitle: (CharSequence) -> Unit = itemTextView::setText
     }
+
+    private class ImageAdapter(private val showcaseItems: List<ShowcaseItem>) :
+        RecyclerView.Adapter<ImageHolder>() {
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageHolder {
+            val textView = TextView(parent.context)
+
+            return ImageHolder(textView)
+        }
+
+        override fun getItemCount(): Int {
+            return showcaseItems.size
+        }
+
+        override fun onBindViewHolder(holder: ImageHolder, position: Int) {
+            val showcaseItem = showcaseItems[position]
+
+            holder.bindTitle(showcaseItem.title)
+        }
+
+    }
 }
