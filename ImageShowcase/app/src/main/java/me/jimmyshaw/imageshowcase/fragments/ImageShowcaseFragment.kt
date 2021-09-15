@@ -53,8 +53,7 @@ class ImageShowcaseFragment : Fragment() {
         imageShowcaseViewModel.showcaseItemLiveData.observe(
             viewLifecycleOwner,
             Observer { showcaseItems ->
-                Log.d(TAG, "Have showcase items from ViewModel $showcaseItems")
-                // TODO: update data backing the recycler view.
+                imageRecyclerView.adapter = ImageAdapter(showcaseItems)
             }
         )
     }
