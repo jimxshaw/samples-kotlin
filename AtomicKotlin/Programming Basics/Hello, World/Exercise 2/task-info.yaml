@@ -8,16 +8,19 @@ files:
   visible: true
   placeholders:
   - offset: 67
-    length: 7
+    length: 42
     placeholder_text: // TODO
     initial_state:
       length: 7
       offset: 67
     initialized_from_dependency: false
-    selected: false
-    status: Unchecked
+    selected: true
+    status: Solved
     encrypted_possible_answer: 2XU/S818KU6OvQhsBkMPfk9WzquYbsWe0kvEmVKe0+58JmjWVIAvafT61YJPKFSi
   encrypted_text: WzMLgow9eqOQ1CEhzmhZ7Gu4fNvO4tujTFL5VLW2GaT3QbSxkJ7kYnNgh9qJ7n8//8sMsfNUA+e8HE+2leQhj1Ig7M7vTwvfsTjWvbU2HK4=
   learner_created: false
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Sun, 28 Nov 2021 18:15:04 UTC
 record: -1
