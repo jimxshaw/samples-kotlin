@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
@@ -52,9 +53,32 @@ class ImageShowcaseFragment : Fragment() {
         imageShowcaseViewModel.showcaseItemLiveData.observe(
             viewLifecycleOwner,
             Observer { showcaseItems ->
-                Log.d(TAG, "Have showcase items from ViewModel $showcaseItems")
-                // TODO: update data backing the recycler view.
+                imageRecyclerView.adapter = ImageAdapter(showcaseItems)
             }
         )
+    }
+
+    private class ImageHolder(itemTextView: TextView) : RecyclerView.ViewHolder(itemTextView) {
+        val bindTitle: (CharSequence) -> Unit = itemTextView::setText
+    }
+
+    private class ImageAdapter(private val showcaseItems: List<ShowcaseItem>) :
+        RecyclerView.Adapter<ImageHolder>() {
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageHolder {
+            val textView = TextView(parent.context)
+
+            return ImageHolder(textView)
+        }
+
+        override fun getItemCount(): Int {
+            return showcaseItems.size
+        }
+
+        override fun onBindViewHolder(holder: ImageHolder, position: Int) {
+            val showcaseItem = showcaseItems[position]
+
+            holder.bindTitle(showcaseItem.title)
+        }
+
     }
 }
