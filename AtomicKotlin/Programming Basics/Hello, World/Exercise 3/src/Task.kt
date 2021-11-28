@@ -2,6 +2,6 @@
 package helloWorldExercise3
 
 fun main() {
-  println("Hello,")
+  //println("Hello,")
   println("Kotlin!")
 }
