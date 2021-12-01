@@ -2,5 +2,8 @@
 package dataTypesExercise1
 
 fun main() {
-  // TODO
+//    var answer: Int = 42
+//    answer = "unknown"
+
+    println("Type mismatch")
 }
