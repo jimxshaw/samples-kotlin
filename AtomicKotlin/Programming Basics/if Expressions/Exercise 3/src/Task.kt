@@ -2,7 +2,7 @@
 package ifExpressionsExercise3
 
 fun findMax(first: Int, second: Int): Int =
-  TODO()
+  if (first > second) first else second
 
 fun main() {
   println(findMax(-1, 4))  // 4
