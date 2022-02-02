@@ -70,7 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:contentDescription="@string/increment"
-
+            android:padding="@dimen/icon_padding"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.888"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -87,7 +87,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:contentDescription="@string/decrement"
-
+            android:padding="@dimen/icon_padding"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.1"
             app:layout_constraintLeft_toLeftOf="parent"
